@@ -14,4 +14,6 @@ end
 def pedeMovimento
     puts "Para onde deseja ir?"
     movimento = gets.strip
+    puts "\n\n\n\n"
+    movimento
 end
