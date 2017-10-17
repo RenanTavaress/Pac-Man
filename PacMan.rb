@@ -18,14 +18,7 @@ def encontraJogador(mapa)
     #nao encontrei o jogador
 end
 
-def joga(nome)
-   mapa = leMapa(1)
-
-   while true
-    desenha(mapa)
-    direcao = pedeMovimento
-    heroi = encontraJogador(mapa)
-    mapa[heroi[0]] [heroi[1]] = " "
+def calculaNovaPosicao(heroi, direcao)
     case direcao
         when "W"
             heroi[0] -= 1
@@ -36,7 +29,19 @@ def joga(nome)
         when "D"
             heroi[1] += 1
     end
-    mapa[heroi[0]] [heroi[1]] = "H"
+    heroi
+end
+
+def joga(nome)
+   mapa = leMapa(1)
+
+   while true
+    desenha(mapa)
+    direcao = pedeMovimento
+    heroi = encontraJogador(mapa)
+    mapa[heroi[0]] [heroi[1]] = " "
+    novaPosicao = calculaNovaPosicao(heroi, direcaos)
+    mapa[novaPosicao[0]] [novaPosicao[1]] = "H"
    end
 end
 
