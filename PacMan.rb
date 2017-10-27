@@ -7,10 +7,23 @@ def leMapa(numero)
 end
 
 def moveFantasma(mapa, linha, coluna)
-    mapa[linha] [coluna] = " "
-    linha += 0
-    coluna += 1
-    mapa[linha] [coluna] = "F"
+    posicao = [linha, coluna + 1]
+    if posicaoValida? mapa, posicao
+        mapa[linha] [coluna] = " "
+        mapa[posicao[0]] [posicao[1]] = "F"
+    end
+end
+
+def moveFantasmas(mapa)
+    caracterDoFantasma = "F"
+    mapa.each_with_index do |linhaAtual, linha|
+        linhaAtual.chars.each_with_index do |caracterAtual, coluna|
+            ehfantasma = caracterAtual == caracterDoFantasma
+            if ehfantasma
+                moveFantasma(mapa, linha, coluna)
+            end
+        end
+    end
 end
 
 def encontraJogador(mapa)
@@ -46,18 +59,19 @@ def posicaoValida?(mapa, posicao)
     colunas = mapa[0].size
     estouroLinhas = posicao[0] < 0 || posicao[0] >= linhas
     estouroColunas = posicao[1] < 0 || posicao[1] >= colunas
+    valorAtual = mapa[posicao[0]] [posicao[1]]
     
     if estouroLinhas || estouroColunas
         return false
     end
-    if mapa[posicao[0]] [posicao[1]] == "X"
+    if valorAtual  == "X" || valorAtual == "F"
         return false
     end
     true
 end
 
 def joga(nome)
-   mapa = leMapa(1)
+   mapa = leMapa(2)
 
    while true
         desenha(mapa)
@@ -69,6 +83,8 @@ def joga(nome)
         end
     mapa[heroi[0]] [heroi[1]] = " "
     mapa[novaPosicao[0]] [novaPosicao[1]] = "H"
+
+    moveFantasmas(mapa)
    end
 end
 
